@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/rabbit
+                           http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+
+    <rabbit:connection-factory id="connectionFactory"
+                               host="${rabbitmq.host}"
+                               virtual-host="${rabbitmq.vhost}"
+                               username="${rabbitmq.user}"
+                               password="${rabbitmq.pass}"
+                               channel-cache-size="5"/>
+
+    <rabbit:admin id="amqpAdmin"
+                  connection-factory="connectionFactory"/>
+
+    <rabbit:queue name="geo_data"/>
+
+    <rabbit:direct-exchange name="geo_ex">
+        <rabbit:bindings>
+            <rabbit:binding queue="geo_data" key="data"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <rabbit:template id="rabbitTemplate"
+                     connection-factory="connectionFactory"
+                     exchange="ecm_jobs"
+                     reply-timeout="1000"/>
+</beans>
