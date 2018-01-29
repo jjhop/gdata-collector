@@ -16,7 +16,7 @@ class InputDataWorkerSpecification extends Specification {
         given:
             def dataDao = Mock(DataDAO.class)
             def message = Mock(Message.class)
-                message.getBody() >> '528.;21.033333;d5252ccd-4312-473e-a974-65e707fa432f'
+                message.getBody() >> '528.53;21.033333;d5252ccd-4312-473e-a974-65e707fa432f'
                 message.getMessageProperties() >> { new MessageProperties() {{
                     setDeliveryTag(Long.MAX_VALUE)
                 }}}
@@ -37,7 +37,7 @@ class InputDataWorkerSpecification extends Specification {
             def dataDao = Mock(DataDAO.class)
                 dataDao.save(_ as Data) >> { throw new DataAccessException("!") {{}} }
             def message = Mock(Message.class)
-            message.getBody() >> '528.;21.033333;d5252ccd-4312-473e-a974-65e707fa432f'
+            message.getBody() >> '528.43;21.033333;d5252ccd-4312-473e-a974-65e707fa432f'
             message.getMessageProperties() >> { new MessageProperties() {{
                 setDeliveryTag(Long.MAX_VALUE)
             }}}
