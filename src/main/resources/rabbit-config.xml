@@ -27,6 +27,7 @@
 
     <rabbit:template id="rabbitTemplate"
                      connection-factory="connectionFactory"
-                     exchange="ecm_jobs"
+                     exchange="get_ex"
+                     routing-key="data"
                      reply-timeout="1000"/>
 </beans>

@@ -16,6 +16,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'groovy'
+apply plugin: 'jacoco'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -35,6 +36,13 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked"
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination new File("${buildDir}/jacocoReports")
+    }
+}
 
 repositories {
     mavenLocal()
@@ -52,6 +60,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-tomcat'
     compile 'org.springframework.boot:spring-boot-starter-amqp'
     compile 'org.springframework.amqp:spring-rabbit'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc'
     compile 'org.springframework.boot:spring-boot-devtools'
     compile 'org.springframework:spring-web'
 
@@ -59,6 +68,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api'
     compile 'javax.json:javax.json-api:1.0'
     compile 'org.glassfish:javax.json:1.0.4'
+    compile 'org.apache.tomcat:tomcat-jdbc'
 
     testCompile 'org.springframework.boot:spring-boot-test'
     testCompile "org.codehaus.groovy:groovy-all:2.4.10"
