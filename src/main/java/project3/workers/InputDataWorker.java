@@ -8,7 +8,7 @@ import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import project3.dao.DataDAO;
+import project3.repository.DataRepository;
 import project3.model.Data;
 
 @Component
@@ -16,11 +16,11 @@ public class InputDataWorker implements ChannelAwareMessageListener {
 
     private final static Logger LOG = LoggerFactory.getLogger(InputDataWorker.class);
 
-    private final DataDAO dataDAO;
+    private final DataRepository dataRepository;
 
     @Autowired
-    public InputDataWorker(DataDAO dataDAO) {
-        this.dataDAO = dataDAO;
+    public InputDataWorker(DataRepository dataRepository) {
+        this.dataRepository = dataRepository;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class InputDataWorker implements ChannelAwareMessageListener {
         Data geoData = Data.fromString(messageBody);
         LOG.trace("Message with deliveryTag={} successfully transformed to Data object [{}]", messageBody, geoData);
         try {
-            dataDAO.save(geoData);
+            dataRepository.save(geoData);
             LOG.trace("Message with deliveryTag={} successfully saved to repository.", messageBody);
             channel.basicAck(deliveryTag, false);
         } catch (Exception e) {

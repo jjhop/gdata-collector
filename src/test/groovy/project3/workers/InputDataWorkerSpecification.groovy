@@ -8,13 +8,13 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 
 import project3.model.Data
-import project3.dao.DataDAO
+import project3.repository.DataRepository
 
 class InputDataWorkerSpecification extends Specification {
 
     def "InputDataWorker#onMessage should consume message when dataDAO works properly"() {
         given:
-            def dataDao = Mock(DataDAO.class)
+            def dataDao = Mock(DataRepository.class)
             def message = Mock(Message.class)
                 message.getBody() >> '528.53;21.033333;d5252ccd-4312-473e-a974-65e707fa432f'
                 message.getMessageProperties() >> { new MessageProperties() {{
@@ -34,7 +34,7 @@ class InputDataWorkerSpecification extends Specification {
 
     def "InputDataWorker#onMessage should not consume message and requeue it when dataDAO#save failed"() {
         given:
-            def dataDao = Mock(DataDAO.class)
+            def dataDao = Mock(DataRepository.class)
                 dataDao.save(_ as Data) >> { throw new DataAccessException("!") {{}} }
             def message = Mock(Message.class)
             message.getBody() >> '528.43;21.033333;d5252ccd-4312-473e-a974-65e707fa432f'

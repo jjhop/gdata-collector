@@ -61,6 +61,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-amqp'
     compile 'org.springframework.amqp:spring-rabbit'
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-devtools'
     compile 'org.springframework:spring-web'
 
