@@ -6,14 +6,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 @Entity
+@Getter
+@EqualsAndHashCode
 public class Data {
 
     // long;lat;userId
     public static Data fromString(String input) {
         String[] data = input.split(";");
-        Data result = new Data(Long.parseLong(data[0]), data[0], data[1]);
-        return result;
+        return new Data() {{
+            this.createdAt = new Date();
+            this.userId = Long.parseLong(data[3]);
+            this.longitude = data[0];
+            this.latitude = data[1];
+        }};
     }
 
     @Id
@@ -23,28 +32,4 @@ public class Data {
     private Long userId;
     private String longitude;
     private String latitude;
-
-    public Data(Long userId, String longitude, String latitude) {
-        this.createdAt = new Date();
-        this.userId = userId;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
-
-    public Long getId() { return id; }
-    public Date getCreatedAt() { return createdAt; }
-    public Long getUserId() { return userId; }
-    public String getLongitude() { return longitude; }
-    public String getLatitude() { return latitude; }
-
-    @Override
-    public String toString() {
-        return "Data#{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", userId=" + userId +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                '}';
-    }
 }
