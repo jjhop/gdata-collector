@@ -1,1 +1,3 @@
-# project_3
+# gdata-collector
+
+Simple springboot project 
