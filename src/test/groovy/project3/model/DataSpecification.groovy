@@ -12,7 +12,7 @@ class DataSpecification extends Specification {
             Data d2 = Data.fromString(inputString)
 
         then:
-            d1.getId() != d2.getId()
+            d1.getCreatedAt() != d2.getCreatedAt()
     }
 
 }
